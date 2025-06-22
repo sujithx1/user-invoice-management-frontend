@@ -140,7 +140,7 @@ export default function InvoiceList({
                 {/* Action Dropdown */}
                 <div className="relative">
                   <button
-                    onClick={() => setActiveDropdown(activeDropdown === invoice.invoiceId ? null : invoice.invoiceId)}
+                    onClick={() =>  setActiveDropdown(prev => prev === invoice.invoiceId ? null : invoice.invoiceId)}
                     className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                   >
                     <MoreHorizontal className="h-5 w-5" />

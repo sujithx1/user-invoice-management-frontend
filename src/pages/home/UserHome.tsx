@@ -82,8 +82,8 @@ useEffect(()=>{
       const searchLower = filters.searchTerm.toLowerCase()
       filtered = filtered.filter(
         (invoice) =>
-          invoice.invoiceNumber.toLowerCase().includes(searchLower) ||
-          invoice.customerName?.toLowerCase().includes(searchLower) ||
+   invoice.invoiceNumber.toString().includes(searchLower)|| 
+             invoice.customerName?.toLowerCase().includes(searchLower) ||
           invoice.description?.toLowerCase().includes(searchLower),
       )
     }
@@ -97,14 +97,16 @@ useEffect(()=>{
     if (filters.status !== "ALL") {
       filtered = filtered.filter((invoice) => invoice.status === filters.status)
     }
-
-    // Date range filter
-    if (filters.dateRange.startDate) {
-      filtered = filtered.filter((invoice) => invoice.invoiceDate >= new Date(filters.dateRange.startDate))
-    }
-    if (filters.dateRange.endDate) {
-      filtered = filtered.filter((invoice) => invoice.invoiceDate <= new Date(filters.dateRange.endDate))
-    }
+if (filters.dateRange.startDate) {
+  filtered = filtered.filter(
+    (invoice) => new Date(invoice.invoiceDate) >= new Date(filters.dateRange.startDate)
+  );
+}
+if (filters.dateRange.endDate) {
+  filtered = filtered.filter(
+    (invoice) => new Date(invoice.invoiceDate) <= new Date(filters.dateRange.endDate)
+  );
+}
 
     setFilteredInvoices(filtered)
   }, [tempinvoices, filters])
@@ -128,9 +130,13 @@ useEffect(()=>{
 
     setInvoices([...tempinvoices, newInvoice])
 dispatch(createInvoice(newInvoice)).unwrap()
-.then(()=>toast.success("success"))
+.then(()=>{toast.success("success")
+
+    fetchUserInvoices()
+})
 .catch((err)=>toast.error(err.message))
     // TODO: Call API nto create invoice
+
   }
 
   const handleEditInvoice = (invoice: Invoice) => {
@@ -167,10 +173,12 @@ dispatch(createInvoice(newInvoice)).unwrap()
   const handleDeleteInvoice = async (invoice: Invoice) => {
 
     dispatch(deleteInvoice({userId:user?.userId||"",id:invoice.id||""})).unwrap()
-    .then(()=>toast.success("success"))
+    .then(()=>{toast.success("success")
+        fetchUserInvoices()
+    })
     .catch((err)=>toast.error(err.message))
-    const updatedInvoices = tempinvoices.filter((inv) => inv.invoiceId !== invoice.invoiceId)
-    setInvoices(updatedInvoices)
+    // const updatedInvoices = tempinvoices.filter((inv) => inv.invoiceId !== invoice.invoiceId)
+    // setInvoices(updatedInvoices)
     // TODO: Call API to delete invoice
   }
 

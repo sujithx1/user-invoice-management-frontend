@@ -37,11 +37,11 @@ export default function CreateInvoiceModal({
     const newErrors: ValidationError[] = []
 
     // Basic validations
-    if (!formData.invoiceNumber.trim()) {
-      newErrors.push({ field: "invoiceNumber", message: "Invoice number is required" })
-    } else if (!/^\d+$/.test(formData.invoiceNumber)) {
-      newErrors.push({ field: "invoiceNumber", message: "Invoice number must contain only digits" })
-    }
+    // if (!formData.invoiceNumber.trim()) {
+    //   newErrors.push({ field: "invoiceNumber", message: "Invoice number is required" })
+    // } else if (!/^\d+$/.test(formData.invoiceNumber)) {
+    //   newErrors.push({ field: "invoiceNumber", message: "Invoice number must contain only digits" })
+    // }
 
     if (!formData.invoiceDate) {
       newErrors.push({ field: "invoiceDate", message: "Invoice date is required" })
@@ -102,19 +102,11 @@ export default function CreateInvoiceModal({
     onClose()
   }
 
- const handleInputChange = <K extends keyof CreateInvoiceRequest>(
-  field: K,
-  value: CreateInvoiceRequest[K]
-) => {
-  setFormData((prev) => ({
-    ...prev,
-    [field]: value,
-  }))
-
-  // Clear error related to this specific field
-  setErrors((prev) => prev.filter((error) => error.field !== field))
-}
-
+  const handleInputChange = (field: keyof CreateInvoiceRequest, value:string|number|Date|undefined) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    // Clear errors for this field
+    setErrors((prev) => prev.filter((error) => error.field !== field))
+  }
 
   const getFieldError = (field: string): string | undefined => {
     return errors.find((error) => error.field === field)?.message
@@ -152,7 +144,7 @@ export default function CreateInvoiceModal({
             </h4>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Invoice Number <span className="text-red-500">*</span>
                 </label>
@@ -173,7 +165,7 @@ export default function CreateInvoiceModal({
                     {getFieldError("invoiceNumber")}
                   </p>
                 )}
-              </div>
+              </div> */}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">

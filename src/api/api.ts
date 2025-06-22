@@ -28,6 +28,12 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       console.error("Unauthorized - redirecting to login")
       // Optionally: window.location.href = "/login"
+    }else if(error.response?.status === 403|| error.response.message=="Token required"){
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+      console.log(user["role"]);
+      
+      api.post(`/refresh/${user.role}`)
+
     }
     return Promise.reject(error)
   }
