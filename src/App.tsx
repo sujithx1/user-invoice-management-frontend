@@ -2,6 +2,8 @@
 import {  Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { AuthRoutes } from "./routes/AuthRoutes"
 import NotFound from "./components/notfound/NotFound"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 
 function App() {
@@ -17,6 +19,9 @@ function App() {
 
       </Routes>
     </Router>
+
+          <ToastContainer position="top-right" autoClose={3000} />
+
  
     </>
   ) 
