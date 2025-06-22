@@ -19,14 +19,14 @@ const Landing = () => {
           Login
         </Link>
 
-        <a
+        {/* <a
           href="https://your-demo-video-link.com"
           target="_blank"
           rel="noreferrer"
           className="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-300 transition"
         >
           Watch Demo
-        </a>
+        </a> */}
       </div>
 
       <footer className="mt-12 text-sm text-gray-500">
